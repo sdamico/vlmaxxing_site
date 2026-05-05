@@ -1,8 +1,8 @@
 # vlmaxxing_site
 
-Landing site for codec-through — training-free anti-recomputation for video VLMs.
+Landing site for VLMaxxing — training-free anti-recomputation for video VLMs.
 
-Companion to the paper repo at <https://github.com/jfbastien/codec-through>.
+Companion to the paper repo at <https://github.com/jfbastien/VLMaxxing>.
 
 ## Stack
 

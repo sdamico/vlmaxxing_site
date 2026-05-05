@@ -84,16 +84,16 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
-              href="https://github.com/jfbastien/codec-through"
+              href="https://github.com/jfbastien/VLMaxxing"
               className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-100 px-5 text-sm font-medium text-zinc-950 transition hover:bg-white"
             >
               Read the paper →
             </a>
             <a
-              href="https://github.com/jfbastien/codec-through"
+              href="https://github.com/jfbastien/VLMaxxing"
               className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-700 px-5 text-sm font-medium text-zinc-200 transition hover:border-zinc-400 hover:text-white"
             >
-              github.com/jfbastien/codec-through
+              github.com/jfbastien/VLMaxxing
             </a>
           </div>
           <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/40">
@@ -231,15 +231,15 @@ export default function Home() {
             <li>
               <a
                 className="text-zinc-200 underline decoration-zinc-700 underline-offset-4 hover:text-white hover:decoration-[var(--color-accent)]"
-                href="https://github.com/jfbastien/codec-through"
+                href="https://github.com/jfbastien/VLMaxxing"
               >
-                Paper repo (codec-through)
+                Paper repo (VLMaxxing)
               </a>
             </li>
             <li>
               <a
                 className="text-zinc-200 underline decoration-zinc-700 underline-offset-4 hover:text-white hover:decoration-[var(--color-accent)]"
-                href="https://github.com/jfbastien/codec-through/blob/main/paper/arxiv/main.tex"
+                href="https://github.com/jfbastien/VLMaxxing/blob/main/paper/arxiv/main.tex"
               >
                 Manuscript source (LaTeX)
               </a>
@@ -247,7 +247,7 @@ export default function Home() {
             <li>
               <a
                 className="text-zinc-200 underline decoration-zinc-700 underline-offset-4 hover:text-white hover:decoration-[var(--color-accent)]"
-                href="https://github.com/jfbastien/codec-through/blob/main/scripts/mlx_vlm_swa_aware_trim.patch"
+                href="https://github.com/jfbastien/VLMaxxing/blob/main/scripts/mlx_vlm_swa_aware_trim.patch"
               >
                 Upstream mlx-vlm SWA-aware cache-trim patch
               </a>
