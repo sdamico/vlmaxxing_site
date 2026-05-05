@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VLMaxxing — training-free anti-recomputation for video VLMs",
+  title: "VLMaxxing by FrameMogging — training-free anti-recomputation for video VLMs",
   description:
     "Reuse what already happened. 54 fps perception per follow-up turn on Gemma 4 26B, zero correctness drift, training-free.",
 };

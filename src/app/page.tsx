@@ -18,14 +18,14 @@ const headlineStats: Stat[] = [
   {
     label: "Correctness drift",
     value: "0 / 21",
-    detail: "choice diffs · 0 correctness diffs · byte-paired audit",
+    detail: "paired choice diffs · paired correctness diffs · same prompt, frames, and seed",
   },
 ];
 
 const mechanismBullets: string[] = [
   "Most of what a video VLM is asked to ingest is what it already ingested. The factory wall did not move; the cache says so.",
-  "Topology-aware prefix snapshot: capture KV state at the [system, image] boundary before question tokens enter, and reuse it across follow-up turns instead of re-prefilling.",
-  "Works on mixed sliding-window / full-attention models (Gemma 4 26B-A4B) with the upstream mlx-vlm cache-trim fix; default cross-turn reuse on those topologies is silently wrong.",
+  "Snapshot the model's working state right after it has seen the video, then reuse that snapshot across follow-up questions instead of re-ingesting the video each time.",
+  "Tested on Gemma 4 26B-A4B and Qwen 2.5-VL-7B-4bit, frozen weights, M5-class hardware. Byte-paired against cold-dense baselines.",
   "Training-free. No new weights, no fine-tune, no distillation. The mechanism is in how the cache is borrowed across turns.",
 ];
 
@@ -35,13 +35,43 @@ const cells: { model: string; frames: string; speedup: string; fps: string; n: s
   { model: "Qwen 2.5-VL-7B-4bit", frames: "20 · short/med/long", speedup: "14.9–35.9×", fps: "—", n: "93" },
 ];
 
+type Clip = {
+  src: string;
+  poster: string;
+  title: string;
+  blurb: string;
+};
+
+const clips: Clip[] = [
+  {
+    src: "/videos/tomato_0298_00_cinematic_explainer.mp4",
+    poster: "/thumbs/tomato_0298_00_cinematic_explainer.png",
+    title: "TOMATO 0298",
+    blurb: "Routing-budget overlay on a TOMATO motion clip. Reused vs fresh blocks per frame.",
+  },
+  {
+    src: "/videos/videomme_267_cinematic_explainer.mp4",
+    poster: "/thumbs/videomme_267_cinematic_explainer.png",
+    title: "VideoMME 267",
+    blurb: "Same overlay on a VideoMME slice — most blocks reuse, only the moving region refreshes.",
+  },
+  {
+    src: "/videos/videomme_380_cinematic_explainer.mp4",
+    poster: "/thumbs/videomme_380_cinematic_explainer.png",
+    title: "VideoMME 380",
+    blurb: "Slow camera pan: shifted blocks dominate, the static background is fully cached.",
+  },
+];
+
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-24 px-6 py-20 sm:px-10 sm:py-28">
         <section className="flex flex-col gap-8">
           <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-zinc-500">
-            <span className="rounded-full border border-zinc-800 px-2.5 py-1">VLMaxxing</span>
+            <span className="rounded-full border border-zinc-800 px-2.5 py-1">
+              VLMaxxing <span className="text-zinc-600">by FrameMogging</span>
+            </span>
             <span className="text-zinc-600">training-free anti-recomputation for video VLMs</span>
           </div>
           <h1 className="text-balance text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
@@ -49,8 +79,8 @@ export default function Home() {
           </h1>
           <p className="max-w-2xl text-balance text-lg text-zinc-400 sm:text-xl">
             Most of what a video VLM is told to ingest is evidence the stack already paid for. We
-            reuse the prompt/KV state across turns and only refresh what actually changed —
-            training-free, byte-paired correctness, on frozen open-weights models.
+            reuse the model&rsquo;s working state across turns and only refresh what actually
+            changed — training-free, no measurable accuracy drift, on frozen open-weights models.
           </p>
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
@@ -65,6 +95,22 @@ export default function Home() {
             >
               github.com/jfbastien/codec-through
             </a>
+          </div>
+          <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/40">
+            <video
+              className="aspect-video w-full"
+              src="/videos/all_clips_cinematic_reel.mp4"
+              poster="/thumbs/all_clips_cinematic_reel.png"
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+            />
+            <div className="border-t border-zinc-900 px-5 py-3 text-xs text-zinc-500">
+              Routing-budget overlay across three clips. Orange highlights the per-frame fresh
+              budget; static and shifted regions reuse the prior cache.
+            </div>
           </div>
         </section>
 
@@ -123,27 +169,58 @@ export default function Home() {
           </div>
           <p className="max-w-3xl text-sm text-zinc-500">
             All rows are paired against cold-dense baselines on the same frames, prompt, and
-            decoding seed. Gemma 4 26B-A4B requires the topology-aware prefix snapshot wrapper +
-            the upstream mlx-vlm cache-trim fix; default cross-turn reuse on mixed-SWA topologies
-            is silently corrupting and is documented in the paper.
+            decoding seed. Engineering caveats — including the cache-correctness boundary on
+            mixed-attention models and the upstream mlx-vlm fix that closes it — are written up
+            in the paper.
           </p>
+        </section>
+
+        <section className="flex flex-col gap-6">
+          <h2 className="text-2xl font-semibold tracking-tight">See it</h2>
+          <p className="max-w-2xl text-sm text-zinc-400">
+            Per-clip routing-budget overlays. Orange highlights what the runtime actually paid to
+            re-ingest on each frame; everything else is reused state.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {clips.map((c) => (
+              <figure
+                key={c.src}
+                className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/40"
+              >
+                <video
+                  className="aspect-video w-full"
+                  src={c.src}
+                  poster={c.poster}
+                  muted
+                  loop
+                  playsInline
+                  controls
+                  preload="metadata"
+                />
+                <figcaption className="border-t border-zinc-900 px-4 py-3">
+                  <div className="text-sm font-medium text-zinc-200">{c.title}</div>
+                  <div className="mt-1 text-xs text-zinc-500">{c.blurb}</div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
 
         <section className="flex flex-col gap-6">
           <h2 className="text-2xl font-semibold tracking-tight">Why it matters</h2>
           <div className="grid gap-6 text-zinc-300 sm:grid-cols-2">
             <p className="text-base leading-relaxed">
-              Continuous-video computer-use agents observe at 30 fps or higher. If the stack
-              re-prefills the entire screen state on every action, you cannot keep up. Cache reuse
-              + selective tail refresh lets the model perceive at 24–134 fps per follow-up turn on
-              a 26B-class open-weights model — the throughput regime where 30 fps observation
-              becomes tractable on consumer-laptop-class hardware.
+              Continuous-video agents — computer-use, screen recording, robotics — need to
+              observe at 30 fps or higher. If the model re-ingests the entire scene on every
+              decision, you cannot keep up. Reusing what already happened lets a 26B-class
+              open-weights VLM perceive at 24–134 fps per follow-up turn, which is the throughput
+              regime where 30 fps observation actually becomes tractable on a laptop.
             </p>
             <p className="text-base leading-relaxed">
-              The mechanism class is also a cache-correctness story. Mixed sliding-window /
-              full-attention topologies break in subtle ways under naive cross-turn reuse — fast
-              and wrong. Topology-aware reuse, with explicit refusal when the rotating buffer has
-              wrapped, is the difference between shipping and shipping silently broken outputs.
+              The bigger picture: most video pipelines hand the model dense pixels every frame
+              and ask it to rediscover what didn&rsquo;t move. Almost everything in a real scene
+              didn&rsquo;t move. Anti-recomputation is just the cache-side answer to that
+              waste — and it gets larger every time the input rate goes up.
             </p>
           </div>
         </section>
