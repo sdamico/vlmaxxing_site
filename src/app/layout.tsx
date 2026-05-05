@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://vlmaxxi.ng"),
   title: "VLMaxxing through FrameMogging — training-free anti-recomputation for video VLMs",
   description,
+  authors: [
+    { name: "Sam D'Amico", url: "https://sdami.co" },
+    { name: "JF Bastien", url: "https://jfbastien.com" },
+  ],
   openGraph: {
     title: "VLMaxxing through FrameMogging",
     description,

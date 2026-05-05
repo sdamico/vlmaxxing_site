@@ -351,7 +351,22 @@ export default function Home() {
         </section>
 
         <footer className="mt-auto border-t border-zinc-900 pt-8 text-xs text-zinc-600">
-          <p>Sam D&rsquo;Amico · JF Bastien · 2026</p>
+          <p className="flex flex-wrap gap-x-2 gap-y-1">
+            <a
+              href="https://sdami.co"
+              className="text-zinc-400 underline decoration-zinc-800 underline-offset-4 hover:text-white hover:decoration-[var(--color-accent)]"
+            >
+              Sam D&rsquo;Amico
+            </a>
+            <span>·</span>
+            <a
+              href="https://jfbastien.com"
+              className="text-zinc-400 underline decoration-zinc-800 underline-offset-4 hover:text-white hover:decoration-[var(--color-accent)]"
+            >
+              JF Bastien
+            </a>
+            <span>· 2026</span>
+          </p>
         </footer>
       </main>
     </div>
