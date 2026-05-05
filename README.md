@@ -33,5 +33,13 @@ Push to GitHub, import the repo in Vercel. No environment variables required.
 ## Editing the headline numbers
 
 Stats and table cells live at the top of `src/app/page.tsx` as plain TS arrays
-(`headlineStats`, `cells`). When the paper updates the n=21 medians or extends
-to 64f / 128f, edit those arrays in one commit.
+(`headlineStats`, `cells`). Keep teaser numbers tied to checked snapshots in
+the VLMaxxing repo, especially `paper/arxiv/generated/data/headline_snapshot.json`
+and `paper/arxiv/generated/data/scaleout_bundle_snapshot.json`.
+
+## Updating videos
+
+Hero and routing videos live under `public/videos/`, with posters under
+`public/thumbs/`. The current hero teaser is `anchored_lure_cut`, and the
+three routing cards use the `*_routing_audit` videos from the VLMaxxing
+experiment artifacts.

@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "VLMaxxing by FrameMogging — training-free anti-recomputation for video VLMs";
+export const alt =
+  "VLMaxxing through FrameMogging — training-free anti-recomputation for video VLMs";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -42,7 +43,7 @@ export default async function OG() {
             }}
           >
             <span style={{ color: fg }}>VLMaxxing</span>
-            <span style={{ marginLeft: 12, color: muted }}>by FrameMogging</span>
+            <span style={{ marginLeft: 12, color: muted }}>through FrameMogging</span>
           </div>
         </div>
 

@@ -13,22 +13,22 @@ const geistMono = Geist_Mono({
 });
 
 const description =
-  "Reuse what already happened. 54 fps perception per follow-up turn on Gemma 4 26B, zero correctness drift, training-free.";
+  "Stop paying twice to see the same pixels. Training-free anti-recomputation for video VLMs, fast same-video follow-ups, and no measurable accuracy drift in tested rows.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vlmaxxingsite.vercel.app"),
-  title: "VLMaxxing by FrameMogging — training-free anti-recomputation for video VLMs",
+  metadataBase: new URL("https://vlmaxxi.ng"),
+  title: "VLMaxxing through FrameMogging — training-free anti-recomputation for video VLMs",
   description,
   openGraph: {
-    title: "VLMaxxing by FrameMogging",
+    title: "VLMaxxing through FrameMogging",
     description,
-    url: "https://vlmaxxingsite.vercel.app",
-    siteName: "VLMaxxing by FrameMogging",
+    url: "https://vlmaxxi.ng",
+    siteName: "VLMaxxing through FrameMogging",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "VLMaxxing by FrameMogging",
+    title: "VLMaxxing through FrameMogging",
     description,
   },
 };
