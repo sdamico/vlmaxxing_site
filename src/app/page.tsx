@@ -66,18 +66,18 @@ const clips: Clip[] = [
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-24 px-6 py-20 sm:px-10 sm:py-28">
-        <section className="flex flex-col gap-8">
-          <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-zinc-500">
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-20 px-5 py-16 sm:gap-24 sm:px-10 sm:py-28">
+        <section className="flex flex-col gap-7 sm:gap-8">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-mono uppercase tracking-[0.16em] text-zinc-500 sm:text-xs sm:tracking-[0.18em]">
             <span className="rounded-full border border-zinc-800 px-2.5 py-1">
               VLMaxxing <span className="text-zinc-600">by FrameMogging</span>
             </span>
             <span className="text-zinc-600">training-free anti-recomputation for video VLMs</span>
           </div>
-          <h1 className="text-balance text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+          <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
             Stop paying twice to see the same pixels.
           </h1>
-          <p className="max-w-2xl text-balance text-lg text-zinc-400 sm:text-xl">
+          <p className="max-w-2xl text-balance text-base text-zinc-400 sm:text-lg lg:text-xl">
             Most of what a video VLM is told to ingest is evidence the stack already paid for. We
             reuse the model&rsquo;s working state across turns and only refresh what actually
             changed — training-free, no measurable accuracy drift, on frozen open-weights models.
@@ -118,9 +118,9 @@ export default function Home() {
           {headlineStats.map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 transition hover:border-zinc-600"
+              className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-5 transition hover:border-zinc-600 sm:p-6"
             >
-              <div className="font-mono text-4xl tracking-tight text-[var(--color-accent)] sm:text-5xl">
+              <div className="font-mono text-3xl tracking-tight text-[var(--color-accent)] sm:text-4xl lg:text-5xl">
                 {s.value}
               </div>
               <div className="mt-3 text-sm font-medium text-zinc-200">{s.label}</div>
@@ -143,25 +143,25 @@ export default function Home() {
 
         <section className="flex flex-col gap-6">
           <h2 className="text-2xl font-semibold tracking-tight">Numbers</h2>
-          <div className="overflow-hidden rounded-2xl border border-zinc-800">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-zinc-950 text-xs uppercase tracking-wider text-zinc-500">
+          <div className="overflow-x-auto overflow-y-hidden rounded-2xl border border-zinc-800">
+            <table className="w-full min-w-[560px] text-left text-sm">
+              <thead className="bg-zinc-950 text-[11px] uppercase tracking-wider text-zinc-500 sm:text-xs">
                 <tr>
-                  <th className="px-5 py-3 font-medium">Model</th>
-                  <th className="px-5 py-3 font-medium">Frames / turn</th>
-                  <th className="px-5 py-3 font-medium">Median speedup</th>
-                  <th className="px-5 py-3 font-medium">Median fps</th>
-                  <th className="px-5 py-3 font-medium">n</th>
+                  <th className="whitespace-nowrap px-3 py-3 font-medium sm:px-5">Model</th>
+                  <th className="whitespace-nowrap px-3 py-3 font-medium sm:px-5">Frames / turn</th>
+                  <th className="whitespace-nowrap px-3 py-3 font-medium sm:px-5">Median speedup</th>
+                  <th className="whitespace-nowrap px-3 py-3 font-medium sm:px-5">Median fps</th>
+                  <th className="whitespace-nowrap px-3 py-3 font-medium sm:px-5">n</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-900">
                 {cells.map((c, i) => (
                   <tr key={i} className="bg-zinc-950/30">
-                    <td className="px-5 py-4 font-mono text-zinc-200">{c.model}</td>
-                    <td className="px-5 py-4 text-zinc-300">{c.frames}</td>
-                    <td className="px-5 py-4 font-mono text-zinc-100">{c.speedup}</td>
-                    <td className="px-5 py-4 font-mono text-zinc-100">{c.fps}</td>
-                    <td className="px-5 py-4 font-mono text-zinc-400">{c.n}</td>
+                    <td className="whitespace-nowrap px-3 py-3 font-mono text-zinc-200 sm:px-5 sm:py-4">{c.model}</td>
+                    <td className="whitespace-nowrap px-3 py-3 text-zinc-300 sm:px-5 sm:py-4">{c.frames}</td>
+                    <td className="whitespace-nowrap px-3 py-3 font-mono text-zinc-100 sm:px-5 sm:py-4">{c.speedup}</td>
+                    <td className="whitespace-nowrap px-3 py-3 font-mono text-zinc-100 sm:px-5 sm:py-4">{c.fps}</td>
+                    <td className="whitespace-nowrap px-3 py-3 font-mono text-zinc-400 sm:px-5 sm:py-4">{c.n}</td>
                   </tr>
                 ))}
               </tbody>
