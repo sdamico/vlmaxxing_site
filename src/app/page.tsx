@@ -5,7 +5,8 @@ type Stat = {
 };
 
 const repoUrl = "https://github.com/jfbastien/VLMaxxing";
-const arxivStatus = "arXiv pending";
+const arxivUrl = "https://arxiv.org/abs/2605.03351";
+const arxivStatus = "arXiv:2605.03351";
 
 const headlineStats: Stat[] = [
   {
@@ -120,7 +121,7 @@ const useCases: { title: string; detail: string }[] = [
 ];
 
 const receipts: { label: string; href?: string }[] = [
-  { label: arxivStatus },
+  { label: arxivStatus, href: arxivUrl },
   { label: "Source repo", href: repoUrl },
   {
     label: "Headline data snapshot",
@@ -161,13 +162,13 @@ export default function Home() {
             follow-up rows.
           </p>
           <div className="flex flex-wrap items-center gap-3 pt-2">
-            <span
-              aria-disabled="true"
-              className="inline-flex h-11 cursor-default items-center justify-center rounded-full bg-zinc-100 px-5 text-sm font-medium text-zinc-950"
+            <a
+              href={arxivUrl}
+              className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-100 px-5 text-sm font-medium text-zinc-950 transition hover:bg-white"
             >
               Read the paper →
               <span className="ml-2 text-zinc-500">{arxivStatus}</span>
-            </span>
+            </a>
             <a
               href={repoUrl}
               className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-700 px-5 text-sm font-medium text-zinc-200 transition hover:border-zinc-400 hover:text-white"
